@@ -4,7 +4,15 @@ var CMSApp = React.createFactory(require('../components/CMSApp').CMSApp);
 module.exports = function(app) {
   app.get('/', function (req, res) {
     var reactHtml = React.renderToString(CMSApp({}));
-    res.render('index.ejs', {reactOutput: reactHtml});
+    process.env.NODE_ENV = 'development'
+    var vars = {
+      reactOutput: reactHtml,
+      assetDomain: ""
+    }
+    if(process.env.NODE_ENV == "development"){
+      vars["assetDomain"] = "http://localhost:3001"
+    }
+    res.render('index.ejs', vars);
   })
 
   // app.get('/', function(req, res){

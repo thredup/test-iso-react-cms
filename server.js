@@ -3,11 +3,24 @@ var morgan = require('morgan')
 var uuid = require('node-uuid')
 path = require('path');
  
+if(!process.env.NODE_ENV)
+	process.env.NODE_ENV = 'development';
+
+function isDev(){
+	return (process.env.NODE_ENV == "development");
+}
+
 morgan.token('id', function getId(req) {
   return req.id
 })
 
 var app = express();
+
+if(isDev()){
+	var webpack = require('webpack');
+	var WebpackDevServer = require('webpack-dev-server');
+	var config = require('./webpack.config.dev');
+}
 
 require("node-jsx").install({ extension: '.jsx', harmony: true });
 
@@ -28,6 +41,14 @@ app.set('view engine', 'ejs'); // set up ejs for templating
 
 require('./app/routes/coreRoutes.js')(app);
 
+if(isDev()){
+	app.all('/*', function(req, res, next) {
+	  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+	  res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+	  next();
+	});
+}
+
 //Route not found -- Set 404
 app.get('*', function(req, res) {
     res.json({
@@ -40,9 +61,25 @@ var server = app.listen(3000, function () {
   var host = server.address().address
   var port = server.address().port
 
-  console.log('Example app listening at http://%s:%s', host, port)
+  console.log('CMS App listening at http://%s:%s', host, port)
 
 })
+
+if(isDev()){
+	new WebpackDevServer(webpack(config), {
+	  publicPath: config.output.publicPath,
+	  hot: true
+	}).listen(3001, 'localhost', function (err, result) {
+	  if (err) {
+	    console.log(err);
+	  }
+  	  var host = server.address().address
+	  var port = server.address().port
+
+
+	  console.log('Hot Loader listening at http://%s:%s',host, port)
+	});
+}
 
 function assignId(req, res, next) {
   req.id = uuid.v4()
