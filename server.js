@@ -9,7 +9,7 @@ morgan.token('id', function getId(req) {
 
 var app = express();
 
-require("node-jsx").install();
+require("node-jsx").install({ extension: '.jsx', harmony: true });
 
 var bodyParser = require('body-parser');
 
@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(assignId)
-app.use(morgan(':id :method :url :response-time'))
+app.use(morgan(':id :status :response-time :method :url'))
 
 app.use(express.static(path.join(__dirname, 'public')));
  

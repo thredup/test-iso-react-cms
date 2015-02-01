@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react/addons');
 // var ReactButton =  React.createFactory(require('./ReactButton').ReactButton);
 
@@ -18,7 +16,7 @@ var CMSApp = React.createClass({
         return (
           <div>
           	<h1>CMSApp</h1>
-          	<h3>Cool beans</h3>
+          	<h3>Cool beans: {this.props.beans}</h3>
           </div>
         )
       }
