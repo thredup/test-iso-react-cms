@@ -15,7 +15,7 @@ var CMSApp = React.createClass({
       render: function () {
         return (
           <div>
-          	<h1>CMSApp</h1>
+          	<h1>CMSApp 3</h1>
           </div>
         )
       }

@@ -1,0 +1,44 @@
+{
+  "mainComponent" : "navigation/lid_1_0_0",
+  "components" : [{
+    "componentName" : "core/htmlSpan_1_0_0",
+    "data" : [{
+      "conditions" : "current_user:customer",
+      "htmlContent" : "<b>FREE SHIPPING</b> ON ORDERS OVER $50"
+    },{ 
+      "htmlContent" : "<b>FREE SHIPPING AND RETURNS</b> ON YOUR FIRST ORDER"
+    }],
+    "css" : ""
+  },
+  {
+    "componentName" : "navigation/lidComponentMenu_1_0_0",
+    "data" : [{
+      "text" : "Share $20",
+      "componentName" : "core/shareBlock_1_0_0"
+    }],
+    "css" : ""
+  },
+  {
+    "conditions" : "current_user:exists",
+    "componentName" : "navigation/lidComponentMenu_1_0_0",
+    "data" : [{
+      "text" : "Account",
+      "componentName" : "navigation/lidMenuList_1_0_0",
+      "data" : [
+
+      ],
+      "css" : ""
+    }],
+    "css" : ""
+  },
+  {
+    "conditions" : "current_user:!exists",
+    "componentName" : "navigation/lidLink_1_0_0",
+    "data" : [{
+      "text" : "Log In",
+      "linkTo" : "/login"
+    }],
+    "css" : ""
+  }
+  ]
+}

@@ -1,7 +1,9 @@
-var express = require('express')
-var morgan = require('morgan')
-var uuid = require('node-uuid')
+var express = require('express'),
+    morgan = require('morgan'),
+    uuid = require('node-uuid'),
+    reload = require('reload');
 path = require('path');
+_ = require('lodash');
  
 if(!process.env.NODE_ENV)
 	process.env.NODE_ENV = 'development';
@@ -39,7 +41,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'ejs'); // set up ejs for templating
 
-require('./app/routes/coreRoutes.js')(app);
+app.use('/', require('./app/routes/coreRoutes'));
+app.use('/content-api', require('./app/routes/contentApiRoutes'));
+
 
 if(isDev()){
 	app.all('/*', function(req, res, next) {
@@ -64,6 +68,7 @@ var server = app.listen(3000, function () {
   console.log('CMS App listening at http://%s:%s', host, port)
 
 })
+reload(server, app);
 
 if(isDev()){
 	new WebpackDevServer(webpack(config), {
