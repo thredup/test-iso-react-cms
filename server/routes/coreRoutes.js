@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var React = require('react/addons');
-var CMSApp = React.createFactory(require('../components/CMSApp').CMSApp);
+var CMSApp = React.createFactory(require('../../app/components/CMSApp').CMSApp);
 
 router.get('/', function(req, res) {
   var reactHtml = React.renderToString(CMSApp({}));

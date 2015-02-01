@@ -38,11 +38,11 @@ app.use(morgan(':id :status :response-time :method :url'))
 
 app.use(express.static(path.join(__dirname, 'public')));
  
-app.set('views', path.join(__dirname, 'app/views'));
+app.set('views', path.join(__dirname, 'server/views'));
 app.set('view engine', 'ejs'); // set up ejs for templating
 
-app.use('/', require('./app/routes/coreRoutes'));
-app.use('/content-api', require('./app/routes/contentApiRoutes'));
+app.use('/', require('./server/routes/coreRoutes'));
+app.use('/content-api', require('./server/routes/contentApiRoutes'));
 
 
 if(isDev()){
